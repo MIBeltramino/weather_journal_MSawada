@@ -26,7 +26,7 @@ function beginSequence(e){
                     temp: dataNew.main.temp
                 };
                 console.log(data);
-                postData();
+                postData(dataNew);
             }else{
                 console.log("Error");
                 return dataNew
