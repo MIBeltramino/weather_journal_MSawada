@@ -10,13 +10,21 @@ const temp = document.getElementById('temp');
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
-//Add input values together
+//Begins process to receive, process, post the data, and update the UI
 generate.addEventListener('click', beginSequence);
 
 function beginSequence(e){
-    const collateUserInput = baseUrl + zip.value + myApiKey; //gets zip  input value when generate button is clicked
+
+    //gets zip  input value when generate button is clicked
+    const collateUserInput = baseUrl + zip.value + myApiKey;
+
+    //prevents the process from attempting to run on absent data
     e.preventDefault();
+
+    //Retrieves the user's input to generate url
     userInput(collateUserInput)
+
+    //Splices the data for the desired information to return
     .then(async function projectData(dataNew){
         try{
             if(dataNew.cod === 200){
@@ -26,7 +34,7 @@ function beginSequence(e){
                     temp: dataNew.main.temp
                 };
                 console.log(data);
-                postData(dataNew);
+                postData('/add', dataNew);
             }else{
                 console.log("Error");
                 return dataNew
@@ -35,17 +43,19 @@ function beginSequence(e){
             console.log("Error", error);
         };
     });
-    retrieveData();
+    retrieveData('/all');
 };
 
 
-//Retrieve user input
+//Retrieve user input and collect data from API
 const userInput = async (dataSource) =>{
     try{
+        //Wait for data before attempting to process
         const incomingData = await fetch(dataSource);
         const dataNew = await incomingData.json();
         if(dataNew.cod === 200){
             console.log(dataNew);
+            console.log("Data collected from API");
             return dataNew;
         }else{
             console.log("Invaild input.");
@@ -70,7 +80,7 @@ const postData = async (url = '', dataNew = {})=>{
         });
         try{
             const addData = await res.json();
-            console.log(addData);
+            console.log("Data posted");
             return addData
         }catch(error){
             console.log("Error. Issue receiving data.", error);
@@ -93,7 +103,6 @@ const retrieveData = async ()=>{
     const requestingData = await fetch('/all');
     try{
         const dataSet = await requestingData.json()
-        console.log(dataSet)
         document.getElementById('temp').innerHTML.HTML = Math.round(dataSet.temp)+ 'degrees';
         document.getElementById('content').innerHTML = dataSet.feelings;
         document.getElementById('date').innerHTML = dataSet.date;
