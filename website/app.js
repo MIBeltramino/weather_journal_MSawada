@@ -43,7 +43,7 @@ function beginSequence(e){
             console.log("Error", error);
         };
     });
-    retrieveData('/all');
+    updateUI('/all');
 };
 
 
@@ -99,7 +99,7 @@ const getPost = async (url) =>{
 };
 
 //Update UI
-const retrieveData = async ()=>{
+const updateUI = async ()=>{
     const requestingData = await fetch('/all');
     try{
         const dataSet = await requestingData.json()
