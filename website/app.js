@@ -29,12 +29,12 @@ function beginSequence(e){
         try{
             if(dataNew.cod === 200){
                 const data = {
-                    newDate,
-                    feelings: feelings.value,
-                    temp: dataNew.main.temp
+                    "date": newDate,
+                    "feelings": feelings.value,
+                    "temp": dataNew.main.temp
                 };
                 console.log(data);
-                postData('/add', dataNew);
+                postData('/add', data);
             }else{
                 console.log("Error");
                 return dataNew
@@ -43,7 +43,7 @@ function beginSequence(e){
             console.log("Error", error);
         };
     });
-    updateUI('/all');
+    updateUI();
 };
 
 
@@ -107,6 +107,6 @@ const updateUI = async ()=>{
         document.getElementById('content').innerHTML = dataSet.feelings;
         document.getElementById('date').innerHTML = dataSet.date;
     }catch(error){
-        console.log("Error.", error);
+        console.log("Error. Could not update user interface.", error);
     }
 };
