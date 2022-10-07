@@ -103,7 +103,7 @@ const updateUI = async ()=>{
     const requestingData = await fetch('/all');
     try{
         const dataSet = await requestingData.json()
-        document.getElementById('temp').innerHTML.HTML = Math.round(dataSet.temp)+ 'degrees';
+        document.getElementById('temp').innerHTML = Math.round(dataSet.temp)+ 'degrees';
         document.getElementById('content').innerHTML = dataSet.feelings;
         document.getElementById('date').innerHTML = dataSet.date;
     }catch(error){
