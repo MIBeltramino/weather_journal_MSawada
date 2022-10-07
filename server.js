@@ -40,5 +40,5 @@ app.post('/add', async function(req, res){
     let newData = await req.body;
     projectData = newData;
     res.send(projectData);
-    console.log(body);
+    //console.log(body);
 });
